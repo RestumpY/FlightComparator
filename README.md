@@ -8,7 +8,7 @@ Voici notre projet qui vous permet de trouver votre meilleur séjour pour pas ch
 
 Pour démarrer le projet
 ```bash
-  pip install selenium
+  pip install selenium python-dotenv
   python main.py
 ```
 
