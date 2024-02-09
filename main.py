@@ -5,11 +5,8 @@ import json
 import os
 from dotenv import load_dotenv
 
-
 # Charger les variables d'environnement depuis le fichier .env
 load_dotenv()
-
-
 # Inputs user
 destination = str(input("Entrez le lieu d'arrivé: "))
 nbreSemaine = int(input("Entrez le nombre de semaines à ajouter : "))
@@ -25,6 +22,9 @@ destinations = []
 
 # Récupérer la valeur de la variable d'environnement
 nbre_iterations = int(os.getenv("NBRE_ITERATIONS"))
+maxWorkers = int(os.getenv("MAX_WORKERS"))
+
+
 # Initialiser la liste de dates
 for i in range(nbre_iterations):
     destinations.append(destination)
@@ -34,7 +34,7 @@ for i in range(nbre_iterations):
 def parse_date(destination, dateDepart, dateArrive):
     return parse(destination, dateDepart, dateArrive)
 
-with ThreadPoolExecutor() as executor:
+with ThreadPoolExecutor(max_workers=maxWorkers) as executor:
     results = executor.map(parse_date, destinations, datesDeparts, datesArrives)
     
 # Liste pour stocker tous les items
