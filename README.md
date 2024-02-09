@@ -13,8 +13,7 @@ Pour démarrer le projet
 ```
 
 
-## Authors
-
+## Contributeurs
 - [Yannis](https://github.com/RestumpY)
 - [Floran](https://github.com/FlorianROUVIER)
 - [Piravin](https://github.com/P-NAGANATHAN)
