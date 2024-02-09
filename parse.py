@@ -46,8 +46,10 @@ def parse(destination, dateDepart, dateArrive):
             villeArrive = driver.find_element(By.CSS_SELECTOR, 'div.e5F5td.vxNK6d div.cQnuXe.k0gFV > div > div > input').get_attribute('value') 
             dateDepart= driver.find_element(By.CSS_SELECTOR, 'div.cQnuXe.k0gFV > div > div > div:nth-child(1) > div > div.oSuIZ.YICvqf.kStSsc.ieVaIb input').get_attribute('value') 
             dateArrive = driver.find_element(By.CSS_SELECTOR, 'div.cQnuXe.k0gFV > div > div > div:nth-child(1) > div > div.oSuIZ.YICvqf.lJODHb.qXDC9e input').get_attribute('value') 
-            heureAller = price.find_element(By.CSS_SELECTOR, 'div.OgQvJf.nKlB3b > div.Ir0Voe > div.zxVSec.YMlIz.tPgKwe.ogfYpf > span > span:nth-child(1)').text
-            heureArrive = price.find_element(By.CSS_SELECTOR, 'div.OgQvJf.nKlB3b > div.Ir0Voe > div.zxVSec.YMlIz.tPgKwe.ogfYpf > span > span:nth-child(2)').text
+            heureAller_element = price.find_element(By.CSS_SELECTOR, 'div.OgQvJf.nKlB3b > div.Ir0Voe > div.zxVSec.YMlIz.tPgKwe.ogfYpf > span > span:nth-child(1)')
+            heureAller = heureAller_element.text if heureAller_element else None
+            heureArrive_element = price.find_element(By.CSS_SELECTOR, 'div.OgQvJf.nKlB3b > div.Ir0Voe > div.zxVSec.YMlIz.tPgKwe.ogfYpf > span > span:nth-child(2)')
+            heureArrive = heureArrive_element.text if heureArrive_element else None
             duree = price.find_element(By.CSS_SELECTOR, 'div.OgQvJf.nKlB3b > div.Ak5kof > div').text
             compagnie = price.find_element(By.CSS_SELECTOR, 'div.OgQvJf.nKlB3b > div.Ir0Voe > div.sSHqwe.tPgKwe.ogfYpf > span:not([class])').text
             prix = price.find_element(By.CSS_SELECTOR, 'div.U3gSDe').text.split('\n')[0]
