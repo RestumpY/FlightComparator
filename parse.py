@@ -1,4 +1,3 @@
-import datetime
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -7,16 +6,13 @@ from selenium.webdriver.support import expected_conditions as EC
 from item import Item
 import time
 
-def parse(destination, nbreSemaine):
+def parse(destination, dateDepart, dateArrive):
     driver = webdriver.Chrome()
     driver.get("https://www.google.com/travel/flights?hl=fr")
 
-    # # Ajoute le nombre de semaines à la date actuelle
-    date1 = datetime.datetime.now()
-    date2 = date1 + datetime.timedelta(weeks=nbreSemaine)
-    date_depart = date1.strftime("%d/%m")
-    date_arrivee = date2.strftime("%d/%m")
 
+    print(dateDepart)
+    print(dateArrive)
     consent = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'button[aria-label="Tout accepter"]')))
     consent.click()
 
@@ -28,10 +24,11 @@ def parse(destination, nbreSemaine):
     time.sleep(2)
 
     select_date_depart = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'div[jscontroller="OKD1oe"] > input[aria-label="Départ"]')))
-    select_date_depart.send_keys(date_depart)
+    select_date_depart.send_keys(dateDepart)
+
 
     select_date_arrivee = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'div[jscontroller="OKD1oe"] > input[aria-label="Retour"]')))
-    select_date_arrivee.send_keys(date_arrivee)
+    select_date_arrivee.send_keys(dateArrive)
     select_date_arrivee.send_keys(Keys.ENTER)
 
     time.sleep(2)
