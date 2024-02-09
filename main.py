@@ -26,7 +26,7 @@ for i in range(10):
 def parse_date(destination, dateDepart, dateArrive):
     return parse(destination, dateDepart, dateArrive)
 
-with ThreadPoolExecutor() as executor:
+with ThreadPoolExecutor(max_workers=5) as executor:
     results = executor.map(parse_date, destinations, datesDeparts, datesArrives)
     
 # Liste pour stocker tous les items
