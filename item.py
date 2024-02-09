@@ -1,12 +1,11 @@
 class Item:
-    def __init__(self, depart, retour, prix, duree ,depart_date, retour_date, heure_depart, heure_retour, compagnie):
-        self.depart = depart
-        self.retour = retour
+    def __init__(self, villeDepart, villeArrive, prix, duree ,departDate, retourDate, heureDepart,heureArrive,compagnie):
+        self.villeDepart = villeDepart
+        self.villeArrive = villeArrive
         self.prix = prix
         self.duree = duree
-        self.depart_date = depart_date
-        self.retour_date = retour_date
-        self.heure_depart = heure_depart
-        self.heure_retour = heure_retour
+        self.departDate = departDate
+        self.retourDate = retourDate
+        self.heureDepart = heureDepart
+        self.heureArrive = heureArrive
         self.compagnie = compagnie
-
