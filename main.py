@@ -43,9 +43,20 @@ select_date_arrivee.send_keys(Keys.ENTER)
 # button.click()
 
 
-# element = driver.find_element(By.CSS_SELECTOR, '#yDmH0d > c-wiz.zQTmif.SSPGKf > div > div:nth-child(2) > c-wiz > div.cKvRXe > c-wiz > div.vg4Z0e > div:nth-child(1) > div.SS6Dqf.POQx1c > div.AJxgH > div > div.rIZzse > div.bgJkKe.K0Tsu > div > div > div.cQnuXe.k0gFV > div > div > div:nth-child(1) > div > div.oSuIZ.YICvqf.kStSsc.ieVaIb > div > div.Z4JKhb.CKPWLe.HDVC8.Xbfhhd > button > span.VfPpkd-kBDsod > svg') 
-# print(dateweek.date_flight)
-# for i in range(10):
-#     element.click()
+
+# #driver.get('nouvelleurl')
+# bestPrice = WebDriverWait(driver, 5).until(
+#     EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'ul.Rk10dc')))
+
+# bestPrice = WebDriverWait(bestPrice[0], 5).until(
+#     EC.presence_of_all_elements_located((By.TAG_NAME, 'li')))
+# for price in bestPrice:
+#     print('-'*6)
+#     horaires = bestPrice.find_elements(By.CSS_SELECTOR, 'span[jscontroller="cNtv4b"] > span')
+#     heureAller = horaires[0].text
+#     heureRetour = horaires[1].text
+#     duree = bestPrice.find_element(By.CSS_SELECTOR, "div > div.yR1fYc > div > div.OgQvJf.nKlB3b > div.Ak5kof > div").text
+#     compagnie = bestPrice.find_element(By.CSS_SELECTOR,'div > div.yR1fYc > div > div.OgQvJf.nKlB3b > div.Ir0Voe > div.sSHqwe.tPgKwe.ogfYpf > span:nth-child(1)")').text
+#     prix = bestPrice.find(By.CSS_SELECTOR,'div > div.yR1fYc > div > div.OgQvJf.nKlB3b > div.U3gSDe > div.BVAVmf.I11szd.POX3ye > div.YMlIz.FpEdX.jLMuyc > span")').text
 
 time.sleep(60)
