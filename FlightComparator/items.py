@@ -7,6 +7,11 @@ import scrapy
 
 
 class FlightcomparatorItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
+    dateAller = scrapy.Field()
+    dateRetour = scrapy.Field()
+    destinationAller = scrapy.Field()
+    destinationRetour = scrapy.Field()
+    nbrPlaces = scrapy.Field()
+    compagnie = scrapy.Field()
+    prix = scrapy.Field()
     pass
