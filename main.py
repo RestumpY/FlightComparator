@@ -8,15 +8,15 @@ from datetime import datetime
 import datetime
 
 driver = webdriver.Chrome()
-driver.get('https://www.google.com/travel/flights?hl=fr')
+driver.get("https://www.google.com/travel/flights?hl=fr")
 
-# Demande à l'utilisateur la destination
+# # Demande à l'utilisateur la destination
 destination = str(input("Entrez la destination: "))
 
-# Demande à l'utilisateur le nombre de semaines à ajouter
+# # Demande à l'utilisateur le nombre de semaines à ajouter
 nombre_semaines = int(input("Entrez le nombre de semaines à ajouter : "))
 
-# Ajoute le nombre de semaines à la date actuelle
+# # Ajoute le nombre de semaines à la date actuelle
 date1 = datetime.datetime.now()
 date2 = date1 + datetime.timedelta(weeks=nombre_semaines)
 date_depart = date1.strftime("%d/%m")
@@ -39,24 +39,27 @@ select_date_arrivee = WebDriverWait(driver, 10).until(EC.presence_of_element_loc
 select_date_arrivee.send_keys(date_arrivee)
 select_date_arrivee.send_keys(Keys.ENTER)
 
-# button = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'button[class="VfPpkd-LgbsSe VfPpkd-LgbsSe-OWXEXe-k8QpJ VfPpkd-LgbsSe-OWXEXe-Bz112c-M1Soyc nCP5yc AjY5Oe LQeN7 TUT4y zlyfOd"]'))) 
-# button.click()
+time.sleep(2)
+button = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'button.VfPpkd-LgbsSe.VfPpkd-LgbsSe-OWXEXe-k8QpJ.VfPpkd-LgbsSe-OWXEXe-Bz112c-M1Soyc.nCP5yc.AjY5Oe.LQeN7.TUT4y.zlyfOd'))) 
+button.click()
 
+bestPrice = WebDriverWait(driver, 5).until(
+    EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'ul.Rk10dc')))
 
-
-# #driver.get('nouvelleurl')
-# bestPrice = WebDriverWait(driver, 5).until(
-#     EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'ul.Rk10dc')))
-
-# bestPrice = WebDriverWait(bestPrice[0], 5).until(
-#     EC.presence_of_all_elements_located((By.TAG_NAME, 'li')))
-# for price in bestPrice:
-#     print('-'*6)
-#     horaires = bestPrice.find_elements(By.CSS_SELECTOR, 'span[jscontroller="cNtv4b"] > span')
-#     heureAller = horaires[0].text
-#     heureRetour = horaires[1].text
-#     duree = bestPrice.find_element(By.CSS_SELECTOR, "div > div.yR1fYc > div > div.OgQvJf.nKlB3b > div.Ak5kof > div").text
-#     compagnie = bestPrice.find_element(By.CSS_SELECTOR,'div > div.yR1fYc > div > div.OgQvJf.nKlB3b > div.Ir0Voe > div.sSHqwe.tPgKwe.ogfYpf > span:nth-child(1)")').text
-#     prix = bestPrice.find(By.CSS_SELECTOR,'div > div.yR1fYc > div > div.OgQvJf.nKlB3b > div.U3gSDe > div.BVAVmf.I11szd.POX3ye > div.YMlIz.FpEdX.jLMuyc > span")').text
+bestPrice = WebDriverWait(bestPrice[0], 5).until(
+    EC.presence_of_all_elements_located((By.TAG_NAME, 'li')))
+for price in bestPrice:
+    print('-'*6)
+    horaires = price.find_elements(By.CSS_SELECTOR, 'span[jscontroller="cNtv4b"] > span')
+    heureAller = horaires[0].text
+    heureRetour = horaires[1].text
+    duree = price.find_element(By.CSS_SELECTOR, "div > div.yR1fYc > div > div.OgQvJf.nKlB3b > div.Ak5kof > div").text
+    compagnie = price.find_element(By.CSS_SELECTOR,'div > div.yR1fYc > div > div.OgQvJf.nKlB3b > div.Ir0Voe > div.sSHqwe.tPgKwe.ogfYpf > span:nth-child(1)').text
+    # prix = price.find_element(By.CSS_SELECTOR,'div > div.yR1fYc > div > div.OgQvJf.nKlB3b > div.U3gSDe > div.BVAVmf.I11szd.POX3ye > div.YMlIz.FpEdX.jLMuyc > span').text
+    print(heureAller)
+    print(heureRetour)
+    print(duree)
+    print(compagnie)
+    # print(prix)
 
 time.sleep(60)
