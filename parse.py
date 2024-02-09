@@ -10,9 +10,9 @@ def parse(destination, dateDepart, dateArrive):
     driver = webdriver.Chrome()
     driver.get("https://www.google.com/travel/flights?hl=fr")
 
-
-    print(dateDepart)
-    print(dateArrive)
+    # Convertir les dates en format de chaîne de caractères
+    dateDepart = dateDepart.strftime("%d/%m")
+    dateArrive = dateArrive.strftime("%d/%m")
     consent = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'button[aria-label="Tout accepter"]')))
     consent.click()
 
@@ -58,17 +58,4 @@ def parse(destination, dateDepart, dateArrive):
         
         item = Item(villeDepart=villeDepart, villeArrive=villeArrive, prix=prix, duree=duree, departDate=dateDepart, retourDate=dateArrive, heureDepart=heureAller, heureArrive=heureArrive, compagnie=compagnie)
         items.append(item)
-
-    for item in items:
-        print("Ville de départ:", item.villeDepart)
-        print("Heure de départ:", item.heureDepart)
-        print("Date de départ:", item.departDate)
-        print("Ville d'arrivée:", item.villeArrive)
-        print("Heure d'arrivé:", item.heureArrive)
-        print("Prix:", item.prix)
-        print("Durée:", item.duree)
-        print("Compagnie:", item.compagnie)
-        print("Date de retour:", item.retourDate)
-
-        print('--'*6)
     return items
