@@ -2,9 +2,15 @@ import datetime
 from parse import parse
 from concurrent.futures import ThreadPoolExecutor
 import json
+import os
+from dotenv import load_dotenv
 
-# # Demande à l'utilisateur la destination
-# depart = str(input("Entrez le lieu de départ: "))
+
+# Charger les variables d'environnement depuis le fichier .env
+load_dotenv()
+
+
+# Inputs user
 destination = str(input("Entrez le lieu d'arrivé: "))
 nbreSemaine = int(input("Entrez le nombre de semaines à ajouter : "))
 dateDepart = input("Entrez la date de départ (Format JJ/MM): ")
@@ -17,8 +23,10 @@ datesDeparts = []
 datesArrives = []
 destinations = []
 
+# Récupérer la valeur de la variable d'environnement
+nbre_iterations = int(os.getenv("NBRE_ITERATIONS"))
 # Initialiser la liste de dates
-for i in range(10):
+for i in range(nbre_iterations):
     destinations.append(destination)
     datesDeparts.append(dateDepart + datetime.timedelta(days=i))
     datesArrives.append(dateArrive + datetime.timedelta(days=i))
@@ -26,7 +34,7 @@ for i in range(10):
 def parse_date(destination, dateDepart, dateArrive):
     return parse(destination, dateDepart, dateArrive)
 
-with ThreadPoolExecutor(max_workers=5) as executor:
+with ThreadPoolExecutor() as executor:
     results = executor.map(parse_date, destinations, datesDeparts, datesArrives)
     
 # Liste pour stocker tous les items
