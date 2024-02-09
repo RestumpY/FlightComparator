@@ -17,7 +17,7 @@ arrival = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPA
 arrival.send_keys('Berlin')
 # arrival.send_keys(Keys.ENTER)
 
-# first_result = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'ul.DFGgtd li:first-child')))
-# first_result.click()
+first_result = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'ul.DFGgtd li:first-child')))
+first_result.click()
 
 time.sleep(60)
