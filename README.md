@@ -11,7 +11,7 @@ Voici notre projet qui vous permet de trouver votre meilleur séjour pour pas ch
   python main.py
 ````
 
-## Environment Variables
+## Variables d'environnement
 
 To run this project, you will need to add the following environment variables to your .env file
 
