@@ -9,13 +9,17 @@ Voici notre projet qui vous permet de trouver votre meilleur séjour pour pas ch
 ```bash
   pip install selenium python-dotenv
   python main.py
-```
-#### .env : 
+````
 
-_NBRE_ITERATIONS_ : Définir la valeur du nombre d'itérations à modifier selon les performances de la machine hôte
-_MAX_WORKERS_ : Définir la valeur du nombre de driver qui vont se lancer lors de l'exécution du script
+## Environment Variables
 
-### Notebook.ipynb : 
+To run this project, you will need to add the following environment variables to your .env file
+
+`NBRE_ITERATIONS` : Définir la valeur du nombre d'itérations à modifier selon les performances de la machine hôte
+
+`MAX_WORKERS` : Définir la valeur du nombre de driver qui vont se lancer lors de l'exécution du script
+
+## Notebook.ipynb : 
 Avec les données récupérées, nous avons utilisé pandas pour déterminer les billets les moins chers
 
 ## Contributeurs
