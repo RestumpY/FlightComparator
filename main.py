@@ -15,7 +15,7 @@ consent.click()
 
 arrival = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//*[@id="i21"]/div[4]/div/div/div[1]/div/div/input')))
 arrival.send_keys('Berlin')
-arrival.send_keys(Keys.ENTER)
+# arrival.send_keys(Keys.ENTER)
 
 # first_result = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'ul.DFGgtd li:first-child')))
 # first_result.click()
