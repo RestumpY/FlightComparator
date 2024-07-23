@@ -19,7 +19,7 @@ def parse(destination, dateDepart, dateArrive):
         consent = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'button[aria-label="Tout accepter"]')))
         consent.click()
 
-        arrival = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//*[@id="i21"]/div[4]/div/div/div[1]/div/div/input')))
+        arrival = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '/html/body/c-wiz[2]/div/div[2]/c-wiz/div[1]/c-wiz/div[2]/div[1]/div[1]/div[1]/div/div[2]/div[1]/div[4]/div/div/div[1]/div/div/input')))
         arrival.send_keys(destination)
         first_result = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'ul.DFGgtd li:first-child')))
         first_result.click()
@@ -35,7 +35,6 @@ def parse(destination, dateDepart, dateArrive):
 
         bestPrice = WebDriverWait(driver, 5).until(
         EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'ul.Rk10dc')))
-
         bestPrice = WebDriverWait(bestPrice[0], 5).until(
         EC.presence_of_all_elements_located((By.TAG_NAME, 'li')))
 
@@ -44,15 +43,16 @@ def parse(destination, dateDepart, dateArrive):
         for price in bestPrice:
             villeDepart = driver.find_element(By.CSS_SELECTOR, 'div.e5F5td.BGeFcf div.cQnuXe.k0gFV > div > div > input').get_attribute('value')
             villeArrive = driver.find_element(By.CSS_SELECTOR, 'div.e5F5td.vxNK6d div.cQnuXe.k0gFV > div > div > input').get_attribute('value') 
-            dateDepart= driver.find_element(By.CSS_SELECTOR, 'div.cQnuXe.k0gFV > div > div > div:nth-child(1) > div > div.oSuIZ.YICvqf.kStSsc.ieVaIb input').get_attribute('value') 
-            dateArrive = driver.find_element(By.CSS_SELECTOR, 'div.cQnuXe.k0gFV > div > div > div:nth-child(1) > div > div.oSuIZ.YICvqf.lJODHb.qXDC9e input').get_attribute('value') 
-            heureAller_element = price.find_element(By.CSS_SELECTOR, 'div.OgQvJf.nKlB3b > div.Ir0Voe > div.zxVSec.YMlIz.tPgKwe.ogfYpf > span > span:nth-child(1)')
+            dateDepart= driver.find_element(By.XPATH, '/html/body/c-wiz[2]/div/div[2]/c-wiz/div[1]/c-wiz/div[2]/div[1]/div/div[2]/div[2]/div/div/div[1]/div/div/div[1]/div/div[1]/div/input').get_attribute('value') 
+            dateArrive = driver.find_element(By.XPATH, '/html/body/c-wiz[2]/div/div[2]/c-wiz/div[1]/c-wiz/div[2]/div[1]/div/div[2]/div[2]/div/div/div[1]/div/div/div[1]/div/div[2]/div/input').get_attribute('value') 
+            heureAller_element = price.find_element(By.CSS_SELECTOR, 'span[aria-label^="Heure de départ"] span[role="text"]')
             heureAller = heureAller_element.text if heureAller_element else None
-            heureArrive_element = price.find_element(By.CSS_SELECTOR, 'div.OgQvJf.nKlB3b > div.Ir0Voe > div.zxVSec.YMlIz.tPgKwe.ogfYpf > span > span:nth-child(2)')
+            heureArrive_element = price.find_element(By.CSS_SELECTOR, 'span[aria-label^="Heure d\'arrivée"] span[role="text"]')
             heureArrive = heureArrive_element.text if heureArrive_element else None
-            duree = price.find_element(By.CSS_SELECTOR, 'div.OgQvJf.nKlB3b > div.Ak5kof > div').text
-            compagnie = price.find_element(By.CSS_SELECTOR, 'div.OgQvJf.nKlB3b > div.Ir0Voe > div.sSHqwe.tPgKwe.ogfYpf > span:not([class])').text
+            duree = price.find_element(By.CSS_SELECTOR, '.gvkrdb').text
+            compagnie = price.find_element(By.CSS_SELECTOR, 'div.sSHqwe.tPgKwe.ogfYpf > span').text
             prix = price.find_element(By.CSS_SELECTOR, 'div.U3gSDe').text.split('\n')[0]
+
             item = Item(villeDepart=villeDepart, villeArrive=villeArrive, prix=prix, duree=duree, departDate=dateDepart, retourDate=dateArrive, heureDepart=heureAller, heureArrive=heureArrive, compagnie=compagnie)
             items.append(item)
         return items
