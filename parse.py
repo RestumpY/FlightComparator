@@ -66,12 +66,10 @@ def parse(depart, destination, classe, dateDepart, dateArrive):
             heureAller = heureAller_element.text if heureAller_element else None
             heureArrive_element = price.find_element(By.CSS_SELECTOR, 'span[aria-label^="Heure d\'arrivée"] span[role="text"]')
             heureArrive = heureArrive_element.text if heureArrive_element else None
-
             heureAller_decimal = parse_time(heureAller)
             heureArrive_decimal = parse_time(heureArrive)
             heureAller_slot = get_time_slot(heureAller_decimal)
             heureArrive_slot = get_time_slot(heureArrive_decimal)
-
             duree_str = price.find_element(By.CSS_SELECTOR, '.gvkrdb').text
             duree = convert_duration_to_hours(duree_str)
             escale = price.find_element(By.CSS_SELECTOR, 'div.BbR8Ec > div.EfT7Ae > span.ogfYpf').text
