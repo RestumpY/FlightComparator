@@ -1,58 +1,31 @@
+# main.py
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from item import Item
 import time
 import json
 from datetime import datetime
+from helper import Item, convert_duration_to_hours, parse_time, get_time_slot, convert_escale
 
-# Fonction pour convertir la durée en heures décimales
-def convert_duration_to_hours(duration_str):
-    parts = duration_str.split()
-    hours = 0
-    minutes = 0
-    for i, part in enumerate(parts):
-        if 'h' in part:
-            # Gestion des espaces autour de 'h'
-            hours_str = part.replace('h', '').strip()
-            if hours_str:
-                hours = int(hours_str)
-            else:
-                # Gestion des cas où 'h' est séparé du nombre par un espace
-                hours = int(parts[i - 1])
-        if 'min' in part:
-            # Gestion des espaces autour de 'min'
-            minutes_str = part.replace('min', '').strip()
-            if minutes_str:
-                minutes = int(minutes_str)
-            else:
-                # Gestion des cas où 'min' est séparé du nombre par un espace
-                minutes = int(parts[i - 1])
-    return hours + minutes / 60
-
-# Fonction pour parser les données
 def parse(depart, destination, classe, dateDepart, dateArrive):
     driver = webdriver.Chrome()
     try:
         driver.get("https://www.google.com/travel/flights?hl=fr")
-        
-        # Convertir les dates en format de chaîne de caractères
+
         dateDepart = dateDepart.strftime("%d/%m")
         dateArrive = dateArrive.strftime("%d/%m")
         consent = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'button[aria-label="Tout accepter"]')))
         consent.click()
 
-        # Gestion de la classe de vol
         classe_element = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '/html/body/c-wiz[2]/div/div[2]/c-wiz/div[1]/c-wiz/div[2]/div[1]/div[1]/div[1]/div/div[1]/div[3]')))
         classe_element.click()
-        print(classe)
         if classe == 1:
-            classeName = "Affaires"
+            classeName = "Business"
             WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '/html/body/c-wiz[2]/div/div[2]/c-wiz/div[1]/c-wiz/div[2]/div[1]/div[1]/div[1]/div/div[1]/div[3]/div/div/div/div[2]/ul/li[3]'))).click()
         else:
-            classeName = "Economique"
+            classeName = "Economy"
 
         departure = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '/html/body/c-wiz[2]/div/div[2]/c-wiz/div[1]/c-wiz/div[2]/div[1]/div[1]/div[1]/div/div[2]/div[1]/div[1]/div/div/div[1]/div/div/input')))
         departure.clear()
@@ -93,12 +66,19 @@ def parse(depart, destination, classe, dateDepart, dateArrive):
             heureAller = heureAller_element.text if heureAller_element else None
             heureArrive_element = price.find_element(By.CSS_SELECTOR, 'span[aria-label^="Heure d\'arrivée"] span[role="text"]')
             heureArrive = heureArrive_element.text if heureArrive_element else None
+
+            heureAller_decimal = parse_time(heureAller)
+            heureArrive_decimal = parse_time(heureArrive)
+            heureAller_slot = get_time_slot(heureAller_decimal)
+            heureArrive_slot = get_time_slot(heureArrive_decimal)
+
             duree_str = price.find_element(By.CSS_SELECTOR, '.gvkrdb').text
-            duree = convert_duration_to_hours(duree_str)  # Utilisation de la fonction de conversion
+            duree = convert_duration_to_hours(duree_str)
+            escale = price.find_element(By.CSS_SELECTOR, 'div.BbR8Ec > div.EfT7Ae > span.ogfYpf').text
+            escale = convert_escale(escale)
             compagnie = price.find_element(By.CSS_SELECTOR, 'div.sSHqwe.tPgKwe.ogfYpf > span').text
             prix = price.find_element(By.CSS_SELECTOR, 'div.U3gSDe').text.split('\n')[0]
-
-            item = Item(villeDepart=villeDepart, villeArrive=villeArrive, classe=classeName, prix=prix, duree=duree, departDate=dateDepart, retourDate=dateArrive, heureDepart=heureAller, heureArrive=heureArrive, compagnie=compagnie)
+            item = Item(villeDepart=villeDepart, villeArrive=villeArrive, classe=classeName, nbreEscale=escale, prix=prix, duree=duree, departDate=dateDepart, retourDate=dateArrive, heureDepart=heureAller, heureDepartName=heureAller_slot, heureArrive=heureArrive, heureArriveName=heureArrive_slot, compagnie=compagnie)
             items.append(item)
        
         return items
