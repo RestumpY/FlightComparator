@@ -4,29 +4,165 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recherche de Prix</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #555;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        #results {
+            width: 100%;
+        }
+
+        .result-table {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 100%;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-table th, .result-table td {
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        .result-table th {
+            background-color: #218838;
+            color: #fff;
+        }
+
+        .result-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
-    <h1>Rechercher le prix d'un trajet</h1>
-    <form action="/scrap" method="POST">
+    <h2>Rechercher le prix d'un trajet</h2>
+    <form id="searchForm" action="/scrap" method="POST">
         <label for="ville_depart">Ville de départ:</label>
         <input type="text" id="ville_depart" name="ville_depart" required>
-        <br>
+        
         <label for="ville_arrive">Ville d'arrivée:</label>
         <input type="text" id="ville_arrive" name="ville_arrive" required>
-        <br>
+        
         <label for="date_depart">Date de départ:</label>
         <input type="date" id="date_depart" name="date_depart" required>
-        <br>
-        <label for="date_depart">Date d'arrivé:</label>
+        
+        <label for="date_arrive">Date d'arrivée:</label>
         <input type="date" id="date_arrive" name="date_arrive" required>
-        <br>
+        
         <label for="classe">Classe:</label>
         <select id="classe" name="classe" required>
-            <option value="economy">Économie</option>
-            <option value="business">Business</option>
+            <option value="0">Économie</option>
+            <option value="1">Business</option>
         </select>
-        <br>
+        
         <button type="submit">Rechercher</button>
     </form>
+    
+    <h2>Résultats des billets</h2>
+    <div id="results">
+
+        <table class="result-table" id="resultTable">
+            <thead>
+                <tr>
+                    <th>Ville de Départ</th>
+                    <th>Ville d'Arrivée</th>
+                    <th>Classe</th>
+                    <th>Nombre d'Escales</th>
+                    <th>Prix</th>
+                    <th>Durée</th>
+                    <th>Date de Départ</th>
+                    <th>Date de Retour</th>
+                    <th>Heure de Départ</th>
+                    <th>Heure d'Arrivée</th>
+                    <th>Compagnie</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.getElementById('searchForm').onsubmit = async function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            const response = await fetch('/scrap', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            
+            const resultTable = document.getElementById('resultTable').getElementsByTagName('tbody')[0];
+            resultTable.innerHTML = '';
+            
+            result.forEach(item => {
+                const row = resultTable.insertRow();
+                row.insertCell(0).innerText = item.villeDepart;
+                row.insertCell(1).innerText = item.villeArrive;
+                row.insertCell(2).innerText = item.classe;
+                row.insertCell(3).innerText = item.nbreEscale;
+                row.insertCell(4).innerText = item.prix;
+                row.insertCell(5).innerText = item.duree;
+                row.insertCell(6).innerText = item.departDate;
+                row.insertCell(7).innerText = item.retourDate;
+                row.insertCell(8).innerText = item.heureDepart;
+                row.insertCell(9).innerText = item.heureArrive;
+                row.insertCell(10).innerText = item.compagnie;
+            });
+        };
+    </script>
 </body>
 </html>

@@ -68,7 +68,8 @@ def parse(depart, destination, classe, dateDepart, dateArrive):
             heureAller_slot = get_time_slot(heureAller_decimal)
             heureArrive_slot = get_time_slot(heureArrive_decimal)
             duree_str = price.find_element(By.CSS_SELECTOR, '.gvkrdb').text
-            duree = convert_duration_to_hours(duree_str)
+            duree = duree_str
+            dureeConvert = convert_duration_to_hours(duree_str)
             escale = price.find_element(By.CSS_SELECTOR, 'div.BbR8Ec > div.EfT7Ae > span.ogfYpf').text
             escale = convert_escale(escale)
             compagnie = price.find_element(By.CSS_SELECTOR, 'div.sSHqwe.tPgKwe.ogfYpf > span').text

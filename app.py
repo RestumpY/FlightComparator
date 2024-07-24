@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template, jsonify
 from datetime import datetime
 from parse import parse
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -9,22 +10,20 @@ def index():
 
 @app.route('/scrap', methods=['POST'])
 def scrap():
-    depart = request.form['ville_depart']
-    destination = request.form['ville_arrive']
-    dateDepart = request.form['date_depart']
-    dateDepart = datetime.strptime(dateDepart, '%Y-%m-%d').strftime("%d/%m")
-    dateArrive = request.form['date_arrive']
-    dateArrive = datetime.strptime(dateArrive, '%Y-%m-%d').strftime("%d/%m")
-
+    ville_depart = request.form['ville_depart']
+    ville_arrive = request.form['ville_arrive']
+    date_depart = request.form['date_depart']
+    date_depart = datetime.strptime(date_depart, '%Y-%m-%d').strftime("%d/%m")
+    date_arrive = request.form['date_arrive']
+    date_arrive = datetime.strptime(date_arrive, '%Y-%m-%d').strftime("%d/%m")
     classe = request.form['classe']
 
-    # Appel de la fonction de scrapping
-    items = parse(depart, destination, classe, dateDepart, dateArrive)
+    # Call the scraping function
+    items = parse(ville_depart, ville_arrive, classe, date_depart, date_arrive)
 
-    # Convertir les objets Item en dictionnaires
+    # Convert items to a list of dictionaries
     items_list = [item.to_dict() for item in items]
 
-    # Retourner les données JSON
     return jsonify(items_list)
 
 if __name__ == '__main__':
