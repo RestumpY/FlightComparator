@@ -8,7 +8,7 @@ import time
 import json
 
 
-def parse(destination, dateDepart, dateArrive):
+def parse(depart, destination, dateDepart, dateArrive):
     driver = webdriver.Chrome()
     try:
         driver.get("https://www.google.com/travel/flights?hl=fr")
@@ -18,6 +18,13 @@ def parse(destination, dateDepart, dateArrive):
         dateArrive = dateArrive.strftime("%d/%m")
         consent = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'button[aria-label="Tout accepter"]')))
         consent.click()
+
+        departure = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '/html/body/c-wiz[2]/div/div[2]/c-wiz/div[1]/c-wiz/div[2]/div[1]/div[1]/div[1]/div/div[2]/div[1]/div[1]/div/div/div[1]/div/div/input')))
+        departure.clear()
+        departure.send_keys(depart)
+        first_result = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'ul.DFGgtd li:first-child')))
+        first_result.click()
+        time.sleep(1)
 
         arrival = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '/html/body/c-wiz[2]/div/div[2]/c-wiz/div[1]/c-wiz/div[2]/div[1]/div[1]/div[1]/div/div[2]/div[1]/div[4]/div/div/div[1]/div/div/input')))
         arrival.send_keys(destination)

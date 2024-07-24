@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 # Charger les variables d'environnement depuis le fichier .env
 load_dotenv()
 # Inputs user
+depart = str(input("Entrez le lieu de départ: "))
 destination = str(input("Entrez le lieu d'arrivé: "))
 nbreSemaine = int(input("Entrez le nombre de semaines à ajouter : "))
 dateDepart = input("Entrez la date de départ (Format JJ/MM): ")
@@ -18,6 +19,7 @@ dateArrive = dateDepart + datetime.timedelta(weeks=nbreSemaine)
 
 datesDeparts = []
 datesArrives = []
+departs = []
 destinations = []
 
 # Récupérer la valeur de la variable d'environnement
@@ -27,15 +29,16 @@ maxWorkers = int(os.getenv("MAX_WORKERS"))
 
 # Initialiser la liste de dates
 for i in range(nbre_iterations):
+    departs.append(depart)
     destinations.append(destination)
     datesDeparts.append(dateDepart + datetime.timedelta(days=i))
     datesArrives.append(dateArrive + datetime.timedelta(days=i))
 
-def parse_date(destination, dateDepart, dateArrive):
-    return parse(destination, dateDepart, dateArrive)
+def parse_date(depart,destination, dateDepart, dateArrive):
+    return parse(depart, destination, dateDepart, dateArrive)
 
 with ThreadPoolExecutor(max_workers=maxWorkers) as executor:
-    results = executor.map(parse_date, destinations, datesDeparts, datesArrives)
+    results = executor.map(parse_date, departs, destinations, datesDeparts, datesArrives)
     
 # Liste pour stocker tous les items
 all_items = []
