@@ -1,13 +1,13 @@
 from datetime import datetime
-
+import re
 class Item:
     def __init__(self, villeDepart, villeArrive, classe, nbreEscale, prix, duree, departDate, retourDate, heureDepart, heureDepartName, heureArrive, heureArriveName, compagnie):
         self.villeDepart = villeDepart
         self.villeArrive = villeArrive
         self.classe = classe
+        self.nbreEscale = nbreEscale
         self.prix = prix
         self.duree = duree
-        self.nbreEscale = nbreEscale
         self.departDate = departDate
         self.retourDate = retourDate
         self.heureDepart = heureDepart
@@ -16,6 +16,23 @@ class Item:
         self.heureArriveName = heureArriveName
         self.compagnie = compagnie
 
+    def to_dict(self):
+        return {
+            'villeDepart': self.villeDepart,
+            'villeArrive': self.villeArrive,
+            'classe': self.classe,
+            'nbreEscale': self.nbreEscale,
+            'prix': self.prix,
+            'duree': self.duree,
+            'departDate': self.departDate,
+            'retourDate': self.retourDate,
+            'heureDepart': self.heureDepart,
+            'heureDepartName': self.heureDepartName,
+            'heureArrive': self.heureArrive,
+            'heureArriveName': self.heureArriveName,
+            'compagnie': self.compagnie
+        }
+    
 time_slots = {
     "Early_Morning": (4, 8),
     "Morning": (8, 12),
@@ -25,6 +42,16 @@ time_slots = {
     "Late_Night": (0, 4)
 }
 
+
+def clean_price(price):
+    if not price:
+        return ""
+    # Supprimer le symbole euro et les espaces
+    price = price.replace('€', '')
+    # Supprimer tous les types d'espaces
+    price = re.sub(r'\s+', '', price)
+    
+    return price
 def convert_duration_to_hours(duration_str):
     parts = duration_str.split()
     hours = 0

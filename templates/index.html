@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recherche de Prix</title>
+</head>
+<body>
+    <h1>Rechercher le prix d'un trajet</h1>
+    <form action="/scrap" method="POST">
+        <label for="ville_depart">Ville de départ:</label>
+        <input type="text" id="ville_depart" name="ville_depart" required>
+        <br>
+        <label for="ville_arrive">Ville d'arrivée:</label>
+        <input type="text" id="ville_arrive" name="ville_arrive" required>
+        <br>
+        <label for="date_depart">Date de départ:</label>
+        <input type="date" id="date_depart" name="date_depart" required>
+        <br>
+        <label for="date_depart">Date d'arrivé:</label>
+        <input type="date" id="date_arrive" name="date_arrive" required>
+        <br>
+        <label for="classe">Classe:</label>
+        <select id="classe" name="classe" required>
+            <option value="economy">Économie</option>
+            <option value="business">Business</option>
+        </select>
+        <br>
+        <button type="submit">Rechercher</button>
+    </form>
+</body>
+</html>
