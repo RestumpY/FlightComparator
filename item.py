@@ -1,7 +1,8 @@
 class Item:
-    def __init__(self, villeDepart, villeArrive, prix, duree ,departDate, retourDate, heureDepart,heureArrive,compagnie):
+    def __init__(self, villeDepart, villeArrive,classe, prix, duree ,departDate, retourDate, heureDepart,heureArrive,compagnie):
         self.villeDepart = villeDepart
         self.villeArrive = villeArrive
+        self.classe = classe
         self.prix = prix
         self.duree = duree
         self.departDate = departDate
