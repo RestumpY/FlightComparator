@@ -110,7 +110,7 @@
         <button type="submit">Rechercher</button>
     </form>
     
-    <h2>Résultats des billets</h2>
+    <h2>Résultats des billets / prédictions</h2>
     <div id="results">
 
         <table class="result-table" id="resultTable">
@@ -120,13 +120,14 @@
                     <th>Ville d'Arrivée</th>
                     <th>Classe</th>
                     <th>Nombre d'Escales</th>
-                    <th>Prix</th>
                     <th>Durée</th>
                     <th>Date de Départ</th>
                     <th>Date de Retour</th>
                     <th>Heure de Départ</th>
                     <th>Heure d'Arrivée</th>
                     <th>Compagnie</th>
+                    <th>Prix</th>
+                    <th>Prédiction du prix</th>
                 </tr>
             </thead>
             <tbody>
@@ -154,13 +155,14 @@
                 row.insertCell(1).innerText = item.villeArrive;
                 row.insertCell(2).innerText = item.classe;
                 row.insertCell(3).innerText = item.nbreEscale;
-                row.insertCell(4).innerText = item.prix;
-                row.insertCell(5).innerText = item.duree;
-                row.insertCell(6).innerText = item.departDate;
-                row.insertCell(7).innerText = item.retourDate;
-                row.insertCell(8).innerText = item.heureDepart;
-                row.insertCell(9).innerText = item.heureArrive;
-                row.insertCell(10).innerText = item.compagnie;
+                row.insertCell(4).innerText = item.duree;
+                row.insertCell(5).innerText = item.departDate;
+                row.insertCell(6).innerText = item.retourDate;
+                row.insertCell(7).innerText = item.heureDepart;
+                row.insertCell(8).innerText = item.heureArrive;
+                row.insertCell(9).innerText = item.compagnie;
+                row.insertCell(10).innerText = item.prix;
+
             });
         };
     </script>
