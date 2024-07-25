@@ -31,16 +31,12 @@ def scrap():
 
     # Faire les prédictions pour chaque élément
     for item in items_list:
-        # Assurez-vous que 'duration' est un nombre, par exemple en minutes
-        duration =item['dureeConvert']  # Implémentez parse_duration pour convertir la durée en minutes
+        duration = item['dureeConvert']
 
         input_data = {
             'class_encoded': class_encoded,
             'duration': duration,
         }
-
-        print(input_data)
-
 
         # Faire la prédiction avec l'API R
         response = requests.get('http://127.0.0.1:8000/predict', params=input_data)
@@ -49,6 +45,7 @@ def scrap():
         item['predicted_price'] = predicted_price
 
     return jsonify(items_list)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
