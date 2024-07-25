@@ -75,7 +75,7 @@ def parse(depart, destination, classe, dateDepart, dateArrive):
             compagnie = price.find_element(By.CSS_SELECTOR, 'div.sSHqwe.tPgKwe.ogfYpf > span').text
             prix = price.find_element(By.CSS_SELECTOR, 'div.U3gSDe').text.split('\n')[0]
             prix = clean_price(prix)
-            item = Item(villeDepart=villeDepart, villeArrive=villeArrive, classe=classeName, nbreEscale=escale, prix=prix, duree=duree, departDate=dateDepart, retourDate=dateArrive, heureDepart=heureAller, heureDepartName=heureAller_slot, heureArrive=heureArrive, heureArriveName=heureArrive_slot, compagnie=compagnie)
+            item = Item(villeDepart=villeDepart, villeArrive=villeArrive, classe=classeName, nbreEscale=escale, prix=prix, predicted_price=0,duree=duree,dureeConvert=dureeConvert, departDate=dateDepart, retourDate=dateArrive, heureDepart=heureAller, heureDepartName=heureAller_slot, heureArrive=heureArrive, heureArriveName=heureArrive_slot, compagnie=compagnie)
             items.append(item)
 
         return items

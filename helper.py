@@ -1,13 +1,15 @@
 from datetime import datetime
 import re
 class Item:
-    def __init__(self, villeDepart, villeArrive, classe, nbreEscale, prix, duree, departDate, retourDate, heureDepart, heureDepartName, heureArrive, heureArriveName, compagnie):
+    def __init__(self, villeDepart, villeArrive, classe, nbreEscale, prix, predicted_price, duree,dureeConvert, departDate, retourDate, heureDepart, heureDepartName, heureArrive, heureArriveName, compagnie):
         self.villeDepart = villeDepart
         self.villeArrive = villeArrive
         self.classe = classe
         self.nbreEscale = nbreEscale
         self.prix = prix
         self.duree = duree
+        self.predicted_price = predicted_price
+        self.dureeConvert = dureeConvert
         self.departDate = departDate
         self.retourDate = retourDate
         self.heureDepart = heureDepart
@@ -21,9 +23,11 @@ class Item:
             'villeDepart': self.villeDepart,
             'villeArrive': self.villeArrive,
             'classe': self.classe,
+            'dureeConvert': self.dureeConvert,
             'nbreEscale': self.nbreEscale,
             'prix': self.prix,
             'duree': self.duree,
+            'predicted_price': self.predicted_price,
             'departDate': self.departDate,
             'retourDate': self.retourDate,
             'heureDepart': self.heureDepart,

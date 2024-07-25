@@ -1,6 +1,8 @@
 from flask import Flask, request, render_template, jsonify
 from datetime import datetime
 from parse import parse
+import requests
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -18,11 +20,33 @@ def scrap():
     date_arrive = datetime.strptime(date_arrive, '%Y-%m-%d').strftime("%d/%m")
     classe = request.form['classe']
 
-    # Call the scraping function
+    # Encodage de la classe
+    class_encoded = 2 if classe == 'Business' else 1
+
+    # Appel à la fonction de parsing
     items = parse(ville_depart, ville_arrive, classe, date_depart, date_arrive)
 
-    # Convert items to a list of dictionaries
+    # Convertir les éléments en une liste de dictionnaires
     items_list = [item.to_dict() for item in items]
+
+    # Faire les prédictions pour chaque élément
+    for item in items_list:
+        # Assurez-vous que 'duration' est un nombre, par exemple en minutes
+        duration =item['dureeConvert']  # Implémentez parse_duration pour convertir la durée en minutes
+
+        input_data = {
+            'class_encoded': class_encoded,
+            'duration': duration,
+        }
+
+        print(input_data)
+
+
+        # Faire la prédiction avec l'API R
+        response = requests.get('http://127.0.0.1:8000/predict', params=input_data)
+        predicted_price = response.json()['prediction']
+
+        item['predicted_price'] = predicted_price
 
     return jsonify(items_list)
 
